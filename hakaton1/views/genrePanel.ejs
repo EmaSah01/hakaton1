@@ -1,0 +1,37 @@
+<!-- genrePanel.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= genre %> - Book Listing</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div class="container">
+    <h2><%= genre %></h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Naziv knjige</th>
+            <th>Autor</th>
+            <th>Godina</th>
+            <th>Žanr</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% knjige.forEach(knjiga => { %>
+            <tr>
+                <td><%= knjiga.id_knjige %></td>
+                <td><%= knjiga.naziv_knjige %></td>
+                <td><%= knjiga.autor %></td>
+                <td><%= knjiga.godina %></td>
+                <td><%= knjiga.zanr %></td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

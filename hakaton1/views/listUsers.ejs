@@ -1,0 +1,164 @@
+<!-- listUsers.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="h
+ttps://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Izlistani korisnici</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FAF3E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #EABF9F;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            max-width: 800px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            background-color: #FAF3E0;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background-color: #B68973;
+            color: white;
+        }
+
+        .btn {
+            background-color: #B68973;
+            color: white;
+            border: 1px solid #B68973;
+            padding: 15px 30px;
+            margin: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: black;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Izlistani korisnici</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Ime</th>
+            <th scope="col">Prezime</th>
+            <th scope="col">Email</th>
+            <th scope="col">Korisničko ime</th>
+            <th scope="col">Uloga</th>
+            <th scope="col">Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < users.length; i++) { %>
+            <tr>
+                <th scope="row"><%= users[i].id_korisnik %></th>
+                <td><%= users[i].ime %></td>
+                <td><%= users[i].prezime %></td>
+                <td><%= users[i].email %></td>
+                <td><%= users[i].korisnicko_ime %></td>
+                <td><%= users[i].uloga %></td>
+                <td>
+                    <form class="delete-form" data-id="<%= users[i].id_korisnik %>" style="display: inline;">
+                        <button class="btn" type="button">Obriši</button>
+                    </form>
+                    <!-- Dodajte druge akcije po potrebi -->
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <a href="/adminPanel">Nazad</a>
+    <!-- Dodajte dugmad ili linkove po potrebi -->
+</div>
+
+</body>
+</html>
+
+<!-- listUsers.ejs -->
+<script>
+    $(document).ready(function () {
+        $('.delete-form button').click(function () {
+            const id = $(this).closest('.delete-form').data('id');
+            console.log('Brisanje korisnika sa ID:', id);
+            deleteKorisnik(id);
+        });
+
+        async function deleteKorisnik(id) {
+            try {
+                const response = await $.ajax({
+                    url: `/adminPanel/SviKorisnici/${id}`,
+                    type: 'DELETE',
+                });
+
+                if (response.success) {
+                    // Osvježite stranicu nakon brisanja korisnika
+                    location.reload();
+                } else {
+                    console.error('Greška prilikom brisanja korisnika.');
+                }
+            } catch (error) {
+                alert('Nemate dozvolu za brisanje administratora.');
+                console.error('Greška prilikom brisanja korisnika:', error);
+
+            }
+        }
+    });
+</script>

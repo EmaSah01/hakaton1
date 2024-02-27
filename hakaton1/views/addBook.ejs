@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj knjigu</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FAF3E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #EABF9F;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            max-width: 400px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-top: 10px;
+            color: white;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #B68973;
+            color: white;
+            border: 1px solid black;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Dodaj knjigu</h1>
+    <form action="/adminPanel/SveKnjige/dodajKnjigu" method="post">
+        <label for="naziv_knjige">Naziv knjige:</label>
+        <input type="text" id="naziv_knjige" name="naziv_knjige" required>
+
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" required>
+
+        <label for="godina">Godina izdanja:</label>
+        <input type="text" id="godina" name="godina" required>
+
+        <label for="zanr">Žanr:</label>
+        <input type="text" id="zanr" name="zanr" required>
+
+        <button type="submit">Dodaj knjigu</button>
+        <a href="/adminPanel/SveKnjige">Nazad</a>
+    </form>
+</div>
+
+</body>
+
+</html>

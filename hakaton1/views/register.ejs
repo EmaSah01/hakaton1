@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Monospace;
+            background-color: #EABF9F;
+        }
+
+        .register_container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: #B68973;
+            width: 80%;
+            max-width: 700px;
+            padding: 20px;
+            border: 3px solid #1E212D;
+            border-radius: 15px;
+        }
+
+        .register_container h1 {
+            color: #1E212D;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .register_container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .register_container input,
+        .register_container select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            background-color: #EABF9F;
+            border-radius: 20px;
+            border: 2px solid #1E212D;
+            font-size: 1.2em;
+        }
+
+        .register_container input:focus {
+            outline: none;
+        }
+
+        .register_container input[type="submit"] {
+            background-color: #1E212D;
+            color: white;
+            cursor: pointer;
+            border-radius: 25px;
+            border: 2px solid #1E212D;
+            font-size: 1.2em;
+        }
+
+        .register_container input[type="submit"]:hover {
+            background-color: #EABF9F;
+            color: black;
+        }
+
+        .register_container a {
+            text-decoration: none;
+            color: #EABF9F;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        ul li {
+            color: black;
+        }
+        .register_container label{
+            font-size: 1.5em;
+        }
+    </style>
+
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div class="register_container">
+<h1>Registriraj se</h1>
+<!--ispisivanje gresaka, ponovo je render ova forma ali je proslijedjen i niz sa greskama koje cemo ispisti ovdje-->
+<ul>
+    <% if(typeof errors!='undefined'){ %>
+        <% errors.forEach(error=>{ %>
+        <li><%= error.message %></li>
+    <%})%> <%}%>
+</ul>
+
+<form action="/register" method="post">
+    <div>
+        <input type="text" id="ime" name="ime" placeholder="Ime" required>
+    </div>
+    <div>
+        <input type="text" id="prezime" name="prezime" placeholder="Prezime" required>
+    </div>
+    <div>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div>
+        <input type="text" id="korisnicko_ime" name="korisnicko_ime" placeholder="Korisnicko ime" required>
+    </div>
+    <div>
+        <input type="password" id="lozinka" name="lozinka" placeholder="Lozinka" required>
+    </div>
+    <div>
+        <input type="password" id="lozinka2" name="lozinka2" placeholder="Ponovo unesite lozinku" required>
+    </div>
+    <div>
+        <label for="uloga">Izaberi ulogu:</label>
+        <select id="uloga" name="uloga" required>
+            <option value="admin">Admin</option>
+            <option value="user" selected>User</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Potvrdi"/>
+    </div>
+    <a href="/login">Već registrovan/a? Prijavi se ovdje</a>
+</form>
+</div>
+</body>
+</html>

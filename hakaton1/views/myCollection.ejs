@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Collection</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #FAF3E0;
+            color: #1E212D;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #1E212D;
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto; /* Set auto for left and right margins to center the table */
+            padding: 10px;
+        }
+
+
+
+        th, td {
+            border: 1px solid #EABF9F;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #B68973;
+            color: #FAF3E0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #FAF3E0;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #EABF9F;
+        }
+
+        button {
+            background-color: #B68973;
+            color: #FAF3E0;
+            border: 2px solid #B68973;
+            border-radius: 15px;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #1E212D;
+            color: #EABF9F;
+            border: 2px solid #1E212D;
+        }
+    </style>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+
+<h1>Moja Kolekcija</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Naziv knjige</th>
+        <th>Autor</th>
+        <th>Godina</th>
+        <th>Žanr</th>
+        <th>Akcije</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% knjige.forEach(knjiga => { %>
+        <tr>
+            <td><%= knjiga.naziv_knjige %></td>
+            <td><%= knjiga.autor %></td>
+            <td><%= knjiga.godina %></td>
+            <td><%= knjiga.zanr %></td>
+            <td>
+                <button onclick="deleteFromCollection('<%= knjiga.id_kolekcija %>')">Izbriši iz kolekcije</button>
+            </td>
+        </tr>
+    <% }); %>
+    </tbody>
+</table>
+<a href="/userPanel">Nazad</a>
+<script>
+    function deleteFromCollection(id) {
+        if (confirm('Da li ste sigurni da želite izbrisati knjigu iz kolekcije?')) {
+            fetch(`/userPanel/deleteFromCollection/${id}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Neuspješno brisanje knjige iz kolekcije');
+                    }
+                    location.reload(); // Osvježi stranicu nakon brisanja
+                })
+                .catch(error => {
+                    console.error('Greška:', error);
+                });
+        }
+    }
+</script>
+
+</body>
+</html>
+

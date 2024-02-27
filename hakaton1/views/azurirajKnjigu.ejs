@@ -1,0 +1,146 @@
+<!-- azurirajKnjigu.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ažuriranje knjige</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FAF3E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #EABF9F;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            max-width: 400px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #B68973;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color:BLACK;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Ažuriranje knjige</h1>
+
+    <form id="updateForm">
+        <input type="hidden" id="id_knjige" name="id_knjige" value="<%= book.id_knjige %>">
+        <label for="naziv_knjige">Naziv knjige:</label>
+        <input type="text" id="naziv_knjige" name="naziv_knjige" value="<%= book.naziv_knjige %>" required>
+
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" value="<%= book.autor %>" required>
+
+        <label for="zanr">Žanr:</label>
+        <input type="text" id="zanr" name="zanr" value="<%= book.zanr || '' %>">
+
+        <label for="godina">Godina izdanja:</label>
+        <input type="text" id="godina" name="godina" value="<%= book.godina || '' %>">
+
+        <button type="button" onclick="updateBook()">Ažuriraj</button>
+    </form>
+</div>
+
+<!-- ... -->
+
+<script>
+    async function updateBook() {
+        console.log('Pozvan updateBook()');
+
+        const id_knjigeElement = document.getElementById('id_knjige');
+        const naziv_knjigeElement = document.getElementById('naziv_knjige');
+        const autorElement = document.getElementById('autor');
+        const zanrElement = document.getElementById('zanr');
+        const godinaElement = document.getElementById('godina');
+
+        if (!id_knjigeElement || !naziv_knjigeElement || !autorElement || !zanrElement || !godinaElement) {
+            console.error('Neki od elemenata nisu pronađeni.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('id_knjige', id_knjigeElement.value);
+        formData.append('naziv_knjige', naziv_knjigeElement.value);
+        formData.append('autor', autorElement.value);
+        formData.append('zanr', zanrElement.value);
+        formData.append('godina', godinaElement.value);
+
+        console.log('Podaci:', formData);
+
+        try {
+            const response = await fetch('/adminPanel/SveKnjige/azurirajKnjigu', {
+                method: 'PUT',
+                body: formData
+            });
+
+            console.log('Dobiven odgovor:', response);
+
+            if (response.ok) {
+                console.log('Knjiga uspešno ažurirana.');
+                window.location.href = '/adminPanel/SveKnjige';
+            } else {
+                console.error('Greška prilikom ažuriranja knjige:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Greška prilikom ažuriranja knjige:', error);
+        }
+    }
+
+</script>
+
+<!-- ... -->
+
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+1. instalirati: nodemon, mysql2, dotenv,  bcrypt-za hesiranje passworda,express-session, express-flash, passport, passport-local
+
+
+
+
+
+
+

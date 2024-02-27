@@ -1,0 +1,166 @@
+<!-- listBooks.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Izlistane knjige</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FAF3E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #EABF9F;
+            padding: 40px; /* Smanjena visina padding-a */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            max-width: 800px; /* Povećana maksimalna širina */
+            width: 90%; /* Manja širina od 100% */
+            margin: 20px auto; /* Dodana margin-top i margin-bottom */
+        }
+
+        h1 {
+            color:WHITE;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            background-color: #FAF3E0;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px; /* Povećana visina padding-a */
+            text-align: left;
+            font-size: 14px;
+
+        }
+        th {
+            background-color:#B68973 ;
+            color: white;
+        }
+
+        .btn {
+            background-color: #B68973 ;
+            color: WHITE;
+            border: 1px #B68973 ;
+            padding: 15px 30px;
+            margin: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color:BLACK;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .table {
+                font-size: 12px; /* Smanjena veličina teksta */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Izlistane knjige</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Naziv knjige</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Žanr</th> <!-- Dodato Žanr -->
+            <th scope="col">Godina izdanja</th> <!-- Dodato Godina izdanja -->
+            <th scope="col">Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < books.length; i++) { %>
+            <tr>
+                <th scope="row"><%= books[i].id_knjige %></th>
+                <td><%= books[i].naziv_knjige %></td>
+                <td><%= books[i].autor %></td>
+                <td><%= books[i].zanr || '' %></td> <!-- Dodato Žanr -->
+                <td><%= books[i].godina || '' %></td> <!-- Dodato Godina izdanja -->
+                <td>
+
+                    <!-- Dodato dugme za brisanje -->
+                    <form class="delete-form" data-id="<%= books[i].id_knjige %>" style="display: inline;">
+                        <button class="btn" type="submit">Obriši</button>
+                    </form>
+                    <form action="/adminPanel/SveKnjige/azurirajKnjigu" method="post" style="display: inline;">
+                        <input type="hidden" name="id_knjige" value="<%= books[i].id_knjige %>">
+                        <button class="btn" type="submit">Ažuriraj</button>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+
+    <button class="btn" onclick="window.location.href='/adminPanel/SveKnjige/dodajKnjigu'">Dodaj</button>
+    <a href="/adminPanel">Nazad</a>
+</div>
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function() {
+        $('.delete-form').submit(function(event) {
+            event.preventDefault();
+            const id = $(this).data('id');
+            console.log('Brisanje knjige sa ID:', id); // Dodajte ovaj red za praćenje u konzoli
+            deleteBook(id);
+        });
+
+        async function deleteBook(id) {
+            try {
+                const response = await $.ajax({
+                    url: `/adminPanel/SveKnjige/${id}`,
+                    type: 'DELETE',
+                });
+
+                if (response.success) {
+                    // Osvježite stranicu nakon brisanja knjige
+                    location.reload();
+                } else {
+                    console.error('Greška prilikom brisanja knjige.');
+                }
+            } catch (error) {
+                console.error('Greška prilikom brisanja knjige:', error);
+            }
+        }
+    });
+</script>

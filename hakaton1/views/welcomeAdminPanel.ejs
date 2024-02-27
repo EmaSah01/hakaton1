@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FAF3E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #EABF9F;
+            padding: 60px; /* Increased padding for the container */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            max-width: 800px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px; /* Adjusted margin between the heading and buttons */
+            font-size: 30px; /* Increased font size for the heading */
+        }
+
+        .btn {
+            background-color: #B68973;
+            color: white;
+            border: 1px solid #B68973;
+            padding: 15px 30px; /* Decreased padding for the buttons */
+            margin: 20px; /* Increased margin for the buttons */
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px; /* Increased font size for the buttons */
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        .btn:hover {
+            background-color: black;
+        }
+    </style>
+    <title>Dobrodošli na admin panel</title>
+</head>
+<body>
+<div class="container">
+    <h1>Dobrodošli na admin panel</h1>
+    <a href="/logout">Logout</a>
+    <button class="btn" onclick="window.location.href='/adminPanel/SveKnjige'">Izlistaj knjige</button>
+    <button class="btn" onclick="window.location.href='/adminPanel/SviKorisnici'">Izlistaj korisnike</button>
+</div>
+</body>
+</html>

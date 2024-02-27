@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Panel</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #FAF3E0; /* Updated background color */
+            color: #1E212D; /* Text color */
+            font-family: Arial, sans-serif; /* Specify a font */
+        }
+        .table-container {
+            margin-top: 20px; /* Dodajte margin-top kako biste razdvojili tabelu od prethodnog sadržaja */
+        }
+
+        .container {
+            margin-left: 200px;
+            margin-top: 110px; /* Povećajte margin-top kako bi oslobodili prostor za .navigation-top */
+            padding: 20px;
+            background-color: #FAF3E0;
+            max-height: calc(100vh - 110px); /* Postavite maksimalnu visinu tako da tabela ne prelazi ispod .navigation-top */
+            overflow: auto; /* Omogući scroll kada je tabela prevelika za prikaz */
+        }
+
+        .navigation-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #EABF9F;
+            padding: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 2; /* Povećajte z-index kako bi bio iznad ostalih elemenata */
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            margin-right: 20px; /* Add some space to the right of the search bar */
+        }
+
+        .search-bar input {
+            background-color:#FAF3E0;
+            flex: 1;
+            padding: 10px; /* Increase padding for better visual appeal */
+            border: 2px solid #B68973; /* Add a border to the input */
+            border-radius: 20px; /* Add border radius for a softer look */
+            outline: none; /* Remove default outline */
+            font-size: 16px; /* Increase font size for better readability */
+        }
+
+        .search-bar button {
+            background-color: #B68973;
+            color: #FAF3E0;
+            border: 2px solid #B68973;
+            border-radius: 15px;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .search-bar button:hover{
+            background-color: #1E212D;
+            color: #EABF9F;
+            border: 2px solid #1E212D;
+        }
+        .my-collection-btn {
+            position: absolute;
+            top: 10px; /* Adjust top position as needed */
+            right: 10px; /* Adjust right position as needed */
+            background-color: #B68973;
+            color: #FAF3E0;
+            border: 2px solid #B68973;
+            border-radius: 15px;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 20px;
+        }
+        .my-collection-btn:hover{
+            background-color: #1E212D;
+            color: #EABF9F;
+            border: 2px solid #1E212D;
+        }
+
+        .navigation-left {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #EABF9F;
+            padding-top: 20px;
+        }
+
+        .navigation-left h2 {
+            text-align: center;
+            color: #1E212D;
+            font-weight: bold;
+            margin: 20px;
+
+            position: relative;
+            z-index: 1;
+
+        }
+
+
+        .navigation-left ul {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        .navigation-left li {
+            margin-bottom: 10px;
+        }
+
+        .navigation-left button {
+            width: 100%;
+            background-color: #B68973;
+            color: #1E212D;
+            border: 1px solid #B68973;
+            cursor: pointer;
+            padding: 8px;
+            margin-top: 10px;
+            border-radius: 15px;
+        }
+
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #EABF9F;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #B68973;
+            color: #FAF3E0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #FAF3E0;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #EABF9F;
+        }
+        .addToCollectionBtn{
+            border-radius: 15px;
+            background-color: #EABF9F;
+            cursor: pointer;
+            border: 2px solid #B68973;
+
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="navigation-left">
+    <h3>Zanr</h3>
+    <ul>
+        <button class="btn" onclick="window.location.href='/userPanel'">IzlistajSve</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/bestseler'">Bestseleri</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/roman'">Romani</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/poezija'">Poezija</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/fantazija'">Fantazija</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/dječiji'">Dječije knjige</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/domaći'">Domaće knjige</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/kriminalistički'">Kriminalističke knjige</button>
+        <button class="btn" onclick="window.location.href='/userPanel/genre/biografija'">Biografija</button>
+    </ul>
+</div>
+
+<div class="navigation-top">
+    <div class="search-bar">
+        <form action="/userPanel/search" method="GET">
+            <input type="text" name="search" placeholder="Pretraži...">
+            <button type="submit">Pretraži</button>
+            <a href="/logout">Logout</a>
+        </form>
+    </div>
+    <!-- Dodajte ovo ispod dugmeta "Moja Kolekcija" u navigation-top divu -->
+    <button type="button" class="my-collection-btn" onclick="window.location.href='/userPanel/kolekcija'">Moja Kolekcija</button>
+</div>
+
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>Naziv knjige</th>
+            <th>Autor</th>
+            <th>Godina</th>
+            <th>Žanr</th>
+            <th></th> <!-- Dodajte praznu ćeliju za dugme -->
+        </tr>
+        </thead>
+        <tbody>
+        <% knjige.forEach(knjiga => { %>
+            <tr>
+                <td><%= knjiga.naziv_knjige %></td>
+                <td><%= knjiga.autor %></td>
+                <td><%= knjiga.godina %></td>
+                <td><%= knjiga.zanr %></td>
+                <!-- Dodajte ovo u vašu petlju koja generiše redove tabele -->
+                <td>
+                    <form action="/userPanel/addToCollection" method="POST">
+                        <input type="hidden" name="naziv_knjige" value="<%= knjiga.naziv_knjige %>">
+                        <input type="hidden" name="autor" value="<%= knjiga.autor %>">
+                        <input type="hidden" name="godina" value="<%= knjiga.godina %>">
+                        <input type="hidden" name="zanr" value="<%= knjiga.zanr %>">
+                        <button class="addToCollectionBtn" type="submit">Dodaj u kolekciju</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
